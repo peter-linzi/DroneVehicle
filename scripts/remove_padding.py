@@ -5,17 +5,15 @@ import fire
 from PIL import Image
 
 
-def crop_img(path, dir):
+def remove_padidng(path, dir):
     path = Path(path)
     dir = Path(dir)
     if path.is_dir():
         for p in path.glob("*"):
-            crop_img(p, dir)
+            remove_padidng(p, dir)
     elif path.is_file() and path.suffix in [".png", ".jpg"]:
         # Opens a image in RGB mode
         im = Image.open(path)
-        # Size of the image in pixels (size of original image)
-        # (This is not mandatory)
         width, height = im.size
         # Setting the points for cropped image
         left = 100
@@ -29,4 +27,4 @@ def crop_img(path, dir):
         im1.save(os.path.join(dir,path.name))
 
 if __name__=="__main__":
-    fire.Fire(crop_img)
+    fire.Fire(remove_padidng)
